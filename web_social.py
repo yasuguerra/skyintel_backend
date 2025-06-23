@@ -7,10 +7,12 @@ from utils import query_ga
 from ai import get_openai_response
 from config import FACEBOOK_ID, INSTAGRAM_ID
 from data_processing import get_facebook_posts, get_instagram_posts, process_facebook_posts, process_instagram_posts
-from layout_components import create_ai_insight_card
+from layout_components import create_ai_insight_card, tab_google_ads, create_ai_insight_card, create_ai_chat_interface
 # Importar los registradores de callbacks específicos
 from callbacks_ga import register_callbacks as register_ga_callbacks
 from callbacks_social import register_callbacks as register_social_callbacks
+from callbacks_ads import register_ads_callbacks
+
 
 def register_web_social_callbacks(app):
     """Registra los callbacks para la sección Web y Redes Sociales."""
@@ -90,6 +92,9 @@ def register_web_social_callbacks(app):
                 ], className='mb-4'),
                 dcc.Loading(id="loading-google-subtabs", type="circle", children=html.Div(id='google-subtabs-content')),
             ])
+        
+        elif tab_ws == 'google_ads_ws':
+            return tab_google_ads.children[0]
 
         elif tab_ws == 'social_media_ws':
             return html.Div([
@@ -112,3 +117,4 @@ def register_web_social_callbacks(app):
     # Registrar los callbacks de los módulos especializados
     register_ga_callbacks(app)
     register_social_callbacks(app)
+    register_ads_callbacks(app)

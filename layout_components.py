@@ -178,7 +178,26 @@ def create_web_social_layout(min_date_allowed, max_date_allowed, start_date_val,
         dcc.Tabs(id='main-tabs-selector-ws', value='overview_ws', children=[
             dcc.Tab(label='Visión General del Negocio 🌐', value='overview_ws'),
             dcc.Tab(label='Google Analytics 📈', value='google_ws'),
+            dcc.Tab(label='Google Ads 💰', value='google_ads_ws'),
             dcc.Tab(label='Redes Sociales 📱', value='social_media_ws'),
         ], className='mb-4'),
         dcc.Loading(id="loading-tabs-ws", type="circle", children=html.Div(id='main-tabs-content-ws')),
     ])
+
+tab_google_ads = dcc.Tab(
+    label="Google Ads 💰", value="google_ads",
+    children=[
+        dbc.Container([
+            html.H4("Rendimiento Google Ads", className="mt-3"),
+            dcc.Graph(id="fig-ads-overview"),
+            dcc.Graph(id="fig-ads-cost"),
+            dcc.Graph(id="fig-ads-keywords"),   # NUEVO
+            dcc.Graph(id="fig-ads-cities"),     # NUEVO
+            create_ai_insight_card('ads-ai-insight-visible',
+                                   title="💡 Diagnóstico y Acción (Google Ads)"),
+            html.Div(id='ads-ai-insight-data', style={'display':'none'}),
+            create_ai_chat_interface('google_ads')
+        ], fluid=True)
+    ], className="p-2"
+)
+
